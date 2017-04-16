@@ -3,6 +3,8 @@
 - Golang with GAE datastore back-end REST API
 - Angular 2, typescript front-end web app.
 
+You will ned Google Cloud SDK installed to run the server.
+
 ### To Run
 - npm install, from the static folder to get angular 2 dependencies.
  ```
