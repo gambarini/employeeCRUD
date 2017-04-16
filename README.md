@@ -19,4 +19,4 @@ You will need Google Cloud SDK installed to run the server.
 /$ dev_appserver.py app.yaml
 ```
 
-Just access the localhost domain created by the dev server, usualy localhost:8080. It should load the CRUD page.
+Just access the localhost domain created by the dev server, usually localhost:8080. It should load the CRUD page.
