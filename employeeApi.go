@@ -8,8 +8,8 @@ import (
   "strings"
   "strconv"
 
-  "appengine"
-  "appengine/datastore"
+  "google.golang.org/appengine"
+  "google.golang.org/appengine/datastore"
 )
 
 type Employee struct {
@@ -21,11 +21,11 @@ type Employee struct {
 }
 
 func init() {
-  fs := http.FileServer(http.Dir("./static"))
-  http.Handle("/", fs)
-  http.HandleFunc("/employee/", func(w http.ResponseWriter, r *http.Request){
+  //fs := http.FileServer(http.Dir("./static"))
+  //http.Handle("/", fs)
+  http.HandleFunc("/api/employee/", func(w http.ResponseWriter, r *http.Request){
 
-    sid := strings.TrimPrefix(r.URL.Path, "/employee/")
+    sid := strings.TrimPrefix(r.URL.Path, "/api/employee/")
     id, err := strconv.ParseInt(sid, 10, 64)
     if err != nil {
       w.WriteHeader(404)
@@ -44,7 +44,7 @@ func init() {
           http.Error(w, "Invalid request method.", 405)
       }
   })
-  http.HandleFunc("/employee", func(w http.ResponseWriter, r *http.Request){
+  http.HandleFunc("/api/employee", func(w http.ResponseWriter, r *http.Request){
     switch r.Method {
       case "GET":
           get(w, r)
@@ -70,6 +70,10 @@ func get(w http.ResponseWriter, r *http.Request){
 
   for i := 0; i < len(employees); i++ {
     employees[i].Id = keys[i].IntID()
+  }
+
+  if employees == nil{
+	employees = []Employee{}
   }
 
   json, _ := json.Marshal(employees)

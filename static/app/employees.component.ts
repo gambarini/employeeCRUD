@@ -11,15 +11,19 @@ import { EmployeeService }   from './employee.service';
 })
 export class EmployeesComponent implements OnInit {
   employees: Employee[];
-  selectedEmployee: Employee;
+  model: Employee;
+  editing: boolean;
+  submitText: string;
 
-  constructor(private employeeService: EmployeeService) {}
 
-  model = new Employee(0,'',0,'')
-  editing = false
-  submitText = 'Add Employee'
+  constructor(private employeeService: EmployeeService) {
+      this.employees = [];
+      this.editing = false;
+      this.submitText = 'Add Employee';
+      this.model = new Employee(0, '', 0, '');
+  }
 
-  formReset(){
+  formReset() : void{
     this.model = new Employee(0,'',0,'')
     this.editing = false
     this.submitText = 'Add Employee'
@@ -37,13 +41,13 @@ export class EmployeesComponent implements OnInit {
         .then(employee => this.employees.forEach((e, i) => { if (e.id == employee.id) this.employees[i] = employee }));
     }
     else {
-    this.employeeService.create(this.model)
-      .then(employee => this.employees.push(employee));
+        this.employeeService.create(this.model)
+        .then(employee => this.employees.push(employee));
     }
     this.formReset()
   }
 
-  edit(employee: Employee){
+  edit(employee: Employee) : void{
     this.editing = true
     this.submitText = 'Edit Employee'
     this.model = {...employee}
